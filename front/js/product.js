@@ -20,6 +20,9 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
     document.getElementById('price').innerText =
     object.price;
+
+    document.getElementById('description').innerText =
+    object.description;
 })
 
 .catch((error) => {
