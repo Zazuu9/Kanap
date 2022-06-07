@@ -9,7 +9,7 @@ fetch("http://localhost:3000/api/products")
 .then((data) => {
      for (let object of data) {
          document.getElementById('items').innerHTML +=
-         `<a href="${object._id}">
+         `<a href="./product.html?id=${object._id}">
             <article>
               <img src="${object.imageUrl}" alt="${object.altTxt}">
               <h3 class="productName">${object.name}</h3>
