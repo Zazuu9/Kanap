@@ -17,7 +17,9 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
     document.getElementById('title').innerText =
     object.name;
-    
+
+    document.getElementById('price').innerText =
+    object.price;
 })
 
 .catch((error) => {
