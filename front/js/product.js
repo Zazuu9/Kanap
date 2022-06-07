@@ -23,6 +23,13 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
     document.getElementById('description').innerText =
     object.description;
+
+    document.getElementById('colors').innerHTML =
+    `<option>--SVP, choisissez une couleur --</option>
+     <option>${object.colors[0]}</option>
+     <option>${object.colors[1]}</option>
+     <option>${object.colors[2]}</option> `;
+
 })
 
 .catch((error) => {
