@@ -15,21 +15,36 @@ fetch(`http://localhost:3000/api/products/${id}`)
     document.querySelector('.item__img').innerHTML =
     `<img src="${object.imageUrl}" alt="Photographie d'un canapé">`;
 
+    console.log(object.imageUrl);
+
     document.getElementById('title').innerText =
     object.name;
+
+    console.log(object.name);
 
     document.getElementById('price').innerText =
     object.price;
 
+    console.log(object.price);
+
     document.getElementById('description').innerText =
     object.description;
 
-    document.getElementById('colors').innerHTML =
-    `<option>--SVP, choisissez une couleur --</option>
-     <option>${object.colors[0]}</option>
-     <option>${object.colors[1]}</option>
-     <option>${object.colors[2]}</option> `;
+    console.log(object.description);
+    
+    console.log(object.colors);
+    
+    let colorsid = document.getElementById("colors");
 
+    for(var colorobject of object.colors) {
+        let tagOption = document.createElement("option");
+
+        tagOption.innerText = colorobject;
+        tagOption.value = colorobject;
+
+        colorsid.add(tagOption);
+        console.log(tagOption);
+    };
 })
 
 .catch((error) => {
