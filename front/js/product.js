@@ -15,23 +15,15 @@ fetch(`http://localhost:3000/api/products/${id}`)
     document.querySelector('.item__img').innerHTML =
     `<img src="${object.imageUrl}" alt="Photographie d'un canapé">`;
 
-    console.log(object.imageUrl);
-
     document.getElementById('title').innerText =
     object.name;
-
-    console.log(object.name);
 
     document.getElementById('price').innerText =
     object.price;
 
-    console.log(object.price);
-
     document.getElementById('description').innerText =
     object.description;
 
-    console.log(object.description);
-    
     console.log(object.colors);
     
     let colorsid = document.getElementById("colors");
@@ -43,6 +35,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
         tagOption.value = colorobject;
 
         colorsid.add(tagOption);
+        
         console.log(tagOption);
     };
 })
