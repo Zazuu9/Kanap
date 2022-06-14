@@ -5,6 +5,10 @@ console.log(id);
 
 fetch(`http://localhost:3000/api/products/${id}`)
 
+.catch((error)=> {
+    alert("Une errreur est survenue")
+})
+
 .then(function(res) {
     if(res.ok) {
         return res.json();
@@ -40,6 +44,24 @@ fetch(`http://localhost:3000/api/products/${id}`)
     };
 })
 
-.catch((error) => {
-    console.log(error);
+const idForm = document.querySelector('.item__content__addButton');
+
+const choixForm = idForm.value;
+console.log(choixForm);
+
+const btn_envoi = document.querySelector('#addToCart');
+console.log(btn_envoi);
+
+btn_envoi.addEventListener("click", (event) => {
+    event.preventDefault();
+    let optionsProduit = {
+        ID: id,
+        qty: document.getElementById('quantity').value,
+        color: document.getElementById('colors').value,
+    }
+console.log(optionsProduit);
 })
+
+
+
+
