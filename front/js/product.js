@@ -1,5 +1,4 @@
 var url = window.location.search;
-console.log(url);
 var id = url.substring(4);
 console.log(id);
 
@@ -27,8 +26,6 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
     document.getElementById('description').innerText =
     object.description;
-
-    console.log(object.colors);
     
     let colorsid = document.getElementById("colors");
 
@@ -40,27 +37,33 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
         colorsid.add(tagOption);
         
-        console.log(tagOption);
     };
 })
 
 const idForm = document.querySelector('.item__content__addButton');
 
 const choixForm = idForm.value;
-console.log(choixForm);
 
 const btn_envoi = document.querySelector('#addToCart');
-console.log(btn_envoi);
 
 btn_envoi.addEventListener("click", (event) => {
     event.preventDefault();
     let optionsProduit = {
         ID: id,
-        qty: document.getElementById('quantity').value,
-        color: document.getElementById('colors').value,
-    }
-console.log(optionsProduit);
+        qty: document.getElementById("quantity").value,
+        color: document.getElementById("colors").value,
+    };
+
+var myArray = [];
+myArray.push(optionsProduit);
+console.log(myArray);
+
 })
+
+
+
+
+
 
 
 
