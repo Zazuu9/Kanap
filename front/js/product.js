@@ -58,6 +58,8 @@ var myArray = [];
 myArray.push(optionsProduit);
 console.log(myArray);
 
+localStorage.setItem('Array', JSON.stringify(myArray));
+
 })
 
 
