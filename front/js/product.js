@@ -40,11 +40,15 @@ fetch(`http://localhost:3000/api/products/${id}`)
     };
 })
 
+
 const idForm = document.querySelector('.item__content__addButton');
 
 const choixForm = idForm.value;
 
 const btn_envoi = document.querySelector('#addToCart');
+
+let ProductInStorage = JSON.parse(localStorage.getItem('Array'));
+console.log(ProductInStorage);
 
 btn_envoi.addEventListener("click", (event) => {
     event.preventDefault();
@@ -54,13 +58,24 @@ btn_envoi.addEventListener("click", (event) => {
         color: document.getElementById("colors").value,
     };
 
-var myArray = [];
-myArray.push(optionsProduit);
-console.log(myArray);
 
-localStorage.setItem('Array', JSON.stringify(myArray));
+if(ProductInStorage) {
+    ProductInStorage.push(optionsProduit);
+    localStorage.setItem('Array', JSON.stringify(ProductInStorage));
+    console.log(ProductInStorage);
+}
+else{
+    ProductInStorage = [];
+    ProductInStorage.push(optionsProduit);
+    localStorage.setItem('Array', JSON.stringify(ProductInStorage));
+    console.log(ProductInStorage);
+}
 
-})
+});
+
+
+
+
 
 
 
