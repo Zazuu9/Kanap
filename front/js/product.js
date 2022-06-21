@@ -52,26 +52,35 @@ console.log(ProductInStorage);
 
 btn_envoi.addEventListener("click", (event) => {
     event.preventDefault();
-    let optionsProduit = {
-        ID: id,
-        qty: document.getElementById("quantity").value,
+    let cart = {
+        _ID: id,
+        qty: Number (document.getElementById("quantity").value),
         color: document.getElementById("colors").value,
     };
 
-
-if(ProductInStorage) {
-    ProductInStorage.push(optionsProduit);
-    localStorage.setItem('Array', JSON.stringify(ProductInStorage));
-    console.log(ProductInStorage);
-}
-else{
-    ProductInStorage = [];
-    ProductInStorage.push(optionsProduit);
-    localStorage.setItem('Array', JSON.stringify(ProductInStorage));
-    console.log(ProductInStorage);
-}
-
+    if(ProductInStorage) {
+        for (i = 0; i < ProductInStorage.length; i++) {
+            if(ProductInStorage[i]._ID == cart._ID && ProductInStorage[i].color == cart.color) {
+                return(
+                    ProductInStorage[i].qty += Number(document.getElementById("quantity").value),
+                    localStorage.setItem('Array', JSON.stringify(ProductInStorage)),
+                    console.log(ProductInStorage)
+                )
+            }
+        };
+        ProductInStorage.push(cart);
+        localStorage.setItem('Array', JSON.stringify(ProductInStorage));
+        console.log(ProductInStorage);
+    }
+    else {
+        ProductInStorage = [];
+        ProductInStorage.push(cart);
+        localStorage.setItem('Array', JSON.stringify(ProductInStorage));
+        console.log(ProductInStorage);
+    };
 });
+
+
 
 
 
