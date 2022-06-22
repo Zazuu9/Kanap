@@ -14,7 +14,7 @@ if (contenu) {
           })
 
         .then(function (api) {
-            document.querySelector("#cart__items").innerHTML +=
+            document.querySelector('#cart__items').innerHTML +=
                 `<article class="cart__item" data-id="${cart._ID}" data-color="${cart.color}">
                 <div class="cart__item__img">
                   <img src="${api.imageUrl}" alt="${api.altTxt}">
@@ -37,6 +37,21 @@ if (contenu) {
                 </div>
               </article`;
         })
+
+        function QuantityTotal(cart) {
+
+            let fullQuantity = document.getElementById('totalQuantity');
+
+            let productsQuantity = contenu
+            .map((cart) => parseInt(cart.qty))
+            .reduce((cart, api) => cart + api);
+
+            fullQuantity.innerHTML = productsQuantity;
+        }
+        QuantityTotal(cart)
+
+        
+
 
         
     });
