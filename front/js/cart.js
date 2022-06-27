@@ -7,6 +7,10 @@ if (contenu) {
         
         fetch(`http://localhost:3000/api/products/${cart._ID}`)
 
+        .catch((error)=> {
+          alert("Une errreur est survenue")
+        })
+
         .then(function(res) {
             if (res.ok) {
               return res.json();
@@ -27,7 +31,7 @@ if (contenu) {
                   </div>
                   <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
-                      <p>Qté : ${cart.qty}</p>
+                      <p>Qté : </p>
                       <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${cart.qty}">
                     </div>
                     <div class="cart__item__content__settings__delete">
@@ -35,24 +39,67 @@ if (contenu) {
                     </div>
                   </div>
                 </div>
-              </article`;
+              </article`;  
         })
 
-        function QuantityTotal(cart) {
+        .then(() => {
+          totalPriceQuantity();
+          supprItem();
+        })
 
-            let fullQuantity = document.getElementById('totalQuantity');
+      function supprItem () {
+        let btn_supprimer = document.getElementsByClassName('deleteItem');
+        console.log(btn_supprimer);
+        
+        for (const suppr of btn_supprimer) {
+            suppr.addEventListener('click', () => {
+              console.log("Hello");
 
-            let productsQuantity = contenu
-            .map((cart) => parseInt(cart.qty))
-            .reduce((cart, api) => cart + api);
+              suppr.closest('article').remove();
 
-            fullQuantity.innerHTML = productsQuantity;
+              let color = suppr.closest('article').dataset.color;
+              let id = suppr.closest('article').dataset.id;
+
+              let index = -1;
+
+              contenu.find(item => {
+                if (cart.qty > 0) {
+                  index = contenu.indexOf(item);
+                  console.log(cart.qty);
+                };
+              })
+              if (index !== -1) {
+                contenu.splice(index);
+                localStorage.setItem('Array', JSON.stringify(contenu));
+                console.log(contenu);
+              };
+              location.reload()
+            })
         }
-        QuantityTotal(cart)
-
-        
-
-
-        
+      }
     });
+    function  totalPriceQuantity() {
+      let quantites = document.querySelectorAll(".itemQuantity");
+        let totalQuantity = 0;
+        let totalPrice = 0;
+    
+        for (let i = 0; i < quantites.length ; i++) {
+            totalQuantity += parseInt(quantites[i].value);
+        }
+    
+        document.getElementById("totalQuantity").innerText = totalQuantity;
+        const descriptions = document.querySelectorAll(".cart__item__content__description");
+    
+        for (let i = 0; i < descriptions.length ; i++){
+            const priceElement = descriptions[i].lastElementChild.innerHTML.slice(0,-1);
+            totalPrice += parseInt(quantites[i].value) * parseInt(priceElement);
+        }
+    
+        document.getElementById("totalPrice").innerText = totalPrice;
+    } 
+
+    
+    
 }
+
+
