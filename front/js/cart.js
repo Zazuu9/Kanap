@@ -74,25 +74,25 @@ if (contenu) {
           for (const suppr of btn_supprimer) {
               suppr.addEventListener('click', () => { /* Au clic */
 
-                suppr.closest('article').remove();
+                suppr.closest('article').remove(); /* Défini à suppr une supression*/
 
-                let color = suppr.closest('article').dataset.color;
-                let id = suppr.closest('article').dataset.id;
+                let color = suppr.closest('article').dataset.color; /* Donne à color la supression dur dataset.color à l'article */
+                let id = suppr.closest('article').dataset.id; /* Donne à id la supression dur dataset.id à l'article */
 
-                let index = -1;
-                console.log(contenu);console.log(JSON.stringify(contenu));
-                contenu.find(item => {
-                  if (item.color == color && item._ID == id) { console.log(item);
+                let index = -1; /* Applique -1 a index*/
+
+                contenu.find(item => { 
+                  if (item.color == color && item._ID == id) { /* Compare si les item.color et _ID son identique à color et id */
                    index = contenu.indexOf(item);
                   };
                 })
-                console.log(index);
+
                 if (index !== -1) {
-                  contenu.splice(index, 1);
+                  contenu.splice(index, 1); /* Supprime 1 fois l'index cibler */
                   localStorage.setItem('Array', JSON.stringify(contenu));
                   console.log(contenu);
                 };
-                totalPriceQuantity()
+                totalPriceQuantity() /* Rechargement de la fonction totalPriceQuantity() */
               })
           }
         }
