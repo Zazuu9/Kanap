@@ -47,59 +47,56 @@ if (contenu) {
           supprItem();
         })
 
-      function supprItem () {
-        let btn_supprimer = document.getElementsByClassName('deleteItem');
-        console.log(btn_supprimer);
+        function  totalPriceQuantity() {
+          let quantites = document.querySelectorAll(".itemQuantity"); 
+            let totalQuantity = 0; /* Déclaration Quantité de  base */
+            let totalPrice = 0; /* Déclaration Prix de base */
         
-        for (const suppr of btn_supprimer) {
-            suppr.addEventListener('click', () => {
-              console.log("Hello");
+            for (let i = 0; i < quantites.length ; i++) {
+                totalQuantity += parseInt(quantites[i].value); /* Récuperation de la quantité*/
+            }
+        
+            document.getElementById("totalQuantity").innerText = totalQuantity; /* Affichage de la quantité total*/
+            const descriptions = document.querySelectorAll(".cart__item__content__description");
+        
+            for (let i = 0; i < descriptions.length ; i++){
+                const priceElement = descriptions[i].lastElementChild.innerHTML; /* Récupération du prix*/
+                totalPrice += parseInt(quantites[i].value) * parseInt(priceElement); /* Multiplication de la quantité et du prix d'un même canapé */
+            }
+        
+            document.getElementById("totalPrice").innerText = totalPrice;/* Affichage du prix total*/
+        }
 
-              suppr.closest('article').remove();
+        function supprItem () {
+          let btn_supprimer = document.getElementsByClassName('deleteItem');
+          console.log(btn_supprimer);
+        
+          for (const suppr of btn_supprimer) {
+              suppr.addEventListener('click', () => { /* Au clic */
 
-              let color = suppr.closest('article').dataset.color;
-              let id = suppr.closest('article').dataset.id;
+                suppr.closest('article').remove();
 
-              let index = -1;
+                let color = suppr.closest('article').dataset.color;
+                let id = suppr.closest('article').dataset.id;
 
-              contenu.find(item => {
-                if (cart.qty > 0) {
-                  index = contenu.indexOf(item);
-                  console.log(cart.qty);
+                let index = -1;
+                console.log(contenu);console.log(JSON.stringify(contenu));
+                contenu.find(item => {
+                  if (item.color == color && item._ID == id) { console.log(item);
+                   index = contenu.indexOf(item);
+                  };
+                })
+                console.log(index);
+                if (index !== -1) {
+                  contenu.splice(index, 1);
+                  localStorage.setItem('Array', JSON.stringify(contenu));
+                  console.log(contenu);
                 };
+                totalPriceQuantity()
               })
-              if (index !== -1) {
-                contenu.splice(index);
-                localStorage.setItem('Array', JSON.stringify(contenu));
-                console.log(contenu);
-              };
-              location.reload()
-            })
+          }
         }
-      }
     });
-    function  totalPriceQuantity() {
-      let quantites = document.querySelectorAll(".itemQuantity");
-        let totalQuantity = 0;
-        let totalPrice = 0;
-    
-        for (let i = 0; i < quantites.length ; i++) {
-            totalQuantity += parseInt(quantites[i].value);
-        }
-    
-        document.getElementById("totalQuantity").innerText = totalQuantity;
-        const descriptions = document.querySelectorAll(".cart__item__content__description");
-    
-        for (let i = 0; i < descriptions.length ; i++){
-            const priceElement = descriptions[i].lastElementChild.innerHTML.slice(0,-1);
-            totalPrice += parseInt(quantites[i].value) * parseInt(priceElement);
-        }
-    
-        document.getElementById("totalPrice").innerText = totalPrice;
-    } 
-
-    
-    
 }
 
 
