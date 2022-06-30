@@ -45,6 +45,7 @@ if (contenu) {
         .then(() => {
           totalPriceQuantity();
           supprItem();
+          changeQuantity();
         })
 
         function  totalPriceQuantity() {
@@ -67,9 +68,8 @@ if (contenu) {
             document.getElementById("totalPrice").innerText = totalPrice;/* Affichage du prix total*/
         }
 
-        function supprItem () {
+        function supprItem() {
           let btn_supprimer = document.getElementsByClassName('deleteItem');
-          console.log(btn_supprimer);
         
           for (const suppr of btn_supprimer) {
               suppr.addEventListener('click', () => { /* Au clic */
@@ -96,6 +96,28 @@ if (contenu) {
               })
           }
         }
+
+        function changeQuantity() {
+          let articlesQuantites = document.querySelectorAll('.itemQuantity');
+
+          articlesQuantites.forEach(function (qty, a) {
+            
+            qty.addEventListener("change", () => {
+              if (qty.value < 1 || qty.value > 100 || qty.value.includes(".")) {
+                alert("Veuillez choisir un nombre entier entre 1 et 100.");
+              } 
+              else {
+                let afficherNouveauQuantite = document.querySelectorAll(".cart__item__content__settings__quantity p");
+                afficherNouveauQuantite[a].textContent = "Qté : ";
+                contenu[a].qty = parseInt(qty.value);
+                localStorage.setItem('Array', JSON.stringify(contenu));console.log(contenu);
+                  totalPriceQuantity();
+              }
+            })
+          })
+          
+        }
+
     });
 }
 
