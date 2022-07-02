@@ -8,7 +8,7 @@ if (contenu) {
         fetch(`http://localhost:3000/api/products/${cart._ID}`)
 
         .catch((error)=> {
-          alert("Une errreur est survenue")
+          alert("Oups, il y a une erreur !")
         })
 
         .then(function(res) {
@@ -115,10 +115,88 @@ if (contenu) {
               }
             })
           })
-          
         }
+
+        
 
     });
 }
 
+let btnCommand = document.getElementById('order');
+
+  btnCommand.addEventListener('click', function(event) {
+    event.preventDefault();
+
+    let nameRegex = /^[a-zA-ZÀ-ÿ\'\-]+$/;
+    let localityRegex = /^[À-ÿA-Za-z0-9\s\'\-]{5,55}$/;
+    let emailRegex = /^([À-ÿA-Za-z0-9_\-\.])+\@([À-ÿA-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+     let firstName = document.getElementById('firstName').value;
+     let validfirstUseName = firstName.match(nameRegex);
+     if (validfirstUseName == null){
+       alert("Votre Prénom n'est pas valide. seulement les caractères A-Z, a-z, '-', accents et apostrophes sont acceptables.");
+       return false;
+    }
+
+    let lastName = document.getElementById('lastName').value;
+    let validLastName = lastName.match(nameRegex);
+    if (validLastName == null){
+      alert("Votre Nom n'est pas valide. seulement les caractères A-Z, a-z, '-', accents et apostrophes sont acceptables.");
+      return false;
+    }  
+
+    let addressLocation = document.getElementById('address').value;
+    let ValidAdressLocation = addressLocation.match(localityRegex);
+    if (ValidAdressLocation == null){
+      alert("Votre Adresse n'est pas valide. Seulement les caractères A-Z, a-z, 0-9, '-', accents et apostrophes sont acceptables.");
+      return false;
+    }
+
+    let cityLoaction = document.getElementById('city').value;
+    let ValidCityLocation = cityLoaction.match(localityRegex);
+    if (ValidCityLocation == null){
+      alert("Votre Ville n'est pas valide. Seulement les caractères A-Z, a-z, '-', accents et apostrophes sont acceptables.");
+      return false;
+    }
+
+    let emailContact = document.getElementById('email').value;
+    let ValidEmailUser = emailContact.match(emailRegex);
+    if (ValidEmailUser == null){
+      alert("Votre Email n'est pas valide. Verifiez si votre mail comporte '@' et seuls les caractères A-Z, a-z, 0-9, '-', '_' et '.' sont acceptables.");
+        return false;
+    }
+
+    let productsId = [];
+    for (item of contenu) {
+        productsId.push(item);
+    }
+
+    const order = {
+        contact : {
+            firstName : firstName,
+            lastName : lastName,
+            address : addressLocation,
+            city : cityLoaction,
+            email : emailContact, 
+        },
+        products : productsId
+    };
+
+    console.log(order);
+
+    fetch('http://127.0.0.1:3000/api/products/order/', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(order)
+    })
+    .then((res) => { 
+        document.location.href = `confirmation.html?id=${res.orderId}`;   
+    })
+    .catch(function() {
+        alert("Oups, il y a une erreur !");
+    });
+  })
 
